@@ -1,12 +1,16 @@
 package com.example.miwok;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,56 +19,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView numbers = (TextView) findViewById(R.id.numbers);
-        numbers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openNumbersList();
-            }
-        });
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 
-        TextView colors = (TextView) findViewById(R.id.colors);
-        colors.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openColorsList();
-            }
-        });
+        // Create an adapter that knows which fragment should be shown on each page
+        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
 
-        TextView family = (TextView) findViewById(R.id.family);
-        family.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openFamilyList();
-            }
-        });
-
-        TextView phrases = (TextView) findViewById(R.id.phrases);
-        phrases.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openPhrasesList();
-            }
-        });
-    }
-
-    public void openNumbersList(){
-        Intent intent = new Intent(this,NumbersActivity.class);
-        startActivity(intent);
-    }
-
-    public void openColorsList(){
-        Intent intent = new Intent(this,ColorsActivity.class);
-        startActivity(intent);
-    }
-
-    public void openPhrasesList(){
-        Intent intent = new Intent(this,PhrasesActivity.class);
-        startActivity(intent);
-    }
-
-    public void openFamilyList(){
-        Intent intent = new Intent(this,FamilyActivity.class);
-        startActivity(intent);
-    }
+        // Set the adapter onto the view pager
+        viewPager.setAdapter(adapter);
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        tabLayout.setupWithViewPager(viewPager);
+}
 }
